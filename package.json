@@ -1,0 +1,17 @@
+{
+    "name": "spells",
+    "version": "1.0.0",
+    "description": "Midterm project by Dmitrii Diachkov",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Dmitrii Diachkov",
+    "license": "ISC",
+    "dependencies": {
+      "ejs": "^3.1.10",
+      "express": "^4.21.2",
+      "mysql": "^2.18.1"
+    }
+  }
+  

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DnD Spells</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+
+    <h1>DnD Spells</h1>
+    <!-- Search and Filter Form -->
+  <form method="get" action="/" style="margin-bottom: 20px;">
+    <input type="text" name="search" value="<%= search %>" placeholder="Search by name..." />
+    <select name="level">
+        <option value="">All Levels</option>
+        <% levels.forEach(levelObj => { %>
+          <option value="<%= levelObj.level %>" <%= selectedLevel == levelObj.level ? 'selected' : '' %>>
+            Level <%= levelObj.level %>
+          </option>
+        <% }) %>
+    </select>
+    
+    <select name="school">
+      <option value="">All Schools</option>
+      <% schools.forEach(schoolObj => { %>
+        <option value="<%= schoolObj.school_name %>" <%= selectedSchool == schoolObj.school_name ? 'selected' : '' %>>
+          <%= schoolObj.school_name %>
+        </option>
+      <% }) %>
+    </select>
+    <button type="submit">Filter</button>
+  </form>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Level</th>
+          <th>School</th>
+          <th>Cast Time</th>
+          <th>Range</th>
+          <th>Duration</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% spells.forEach(spell => { %>
+        <tr>
+          <td><%= spell.name %></td>
+          <td><%= spell.level %></td>
+          <td><%= spell.school_name %></td>
+          <td><%= spell.cast_time %></td>
+          <td><%= spell.spell_range %></td>
+          <td><%= spell.duration %></td>
+          <td><a href="/spell/<%= spell.spell_id %>">View Details</a></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="pagination">
+      <% for (let i = 1; i <= totalPages; i++) { %>
+      <a
+        href="/?page=<%= i %>"
+        class="pagination-button <%= i === currentPage ? 'active' : '' %>"
+      >
+        <%= i %>
+      </a>
+      <% } %>
+    </div>
+
+    <!-- Visualizations -->
+    <h2>Visualizations</h2>
+    <!-- Link to Visualizations -->
+    <div>
+      <a href="/visualizations">View Visualizations</a>
+    </div>
+  </body>
+</html>

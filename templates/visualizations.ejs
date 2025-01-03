@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visualizations</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <h1>Spells</h1>
+
+    <article>
+      <h2>Spells by School</h2>
+      <canvas id="schoolChart" width="400" height="200"></canvas>
+    </article>
+    <article>
+      <h2>Spells by Spell Level</h2>
+      <canvas id="levelChart" width="400" height="200"></canvas>
+    </article>
+    <article>
+      <h2>Spells by cast time</h2>
+      <canvas id="castTimeChart" width="400" height="200"></canvas>
+    </article>
+
+    <script>
+      // Fetch and display school distribution
+      fetch("/visualizations/schools")
+        .then((response) => response.json())
+        .then((data) => {
+          const labels = data.map((d) => d.school_name);
+          const counts = data.map((d) => d.count);
+          new Chart(document.getElementById("schoolChart"), {
+            type: "pie",
+            data: {
+              labels,
+              datasets: [
+                {
+                  data: counts,
+                  backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+                },
+              ],
+            },
+          });
+        });
+
+      // Fetch and display level distribution
+      fetch("/visualizations/levels")
+        .then((response) => response.json())
+        .then((data) => {
+          const labels = data.map((d) => `Level ${d.level}`);
+          const counts = data.map((d) => d.count);
+          new Chart(document.getElementById("levelChart"), {
+            type: "bar",
+            data: {
+              labels,
+              datasets: [{ data: counts, backgroundColor: "#36A2EB" }],
+            },
+          });
+        });
+
+      // Fetch and display cast time distribution
+      fetch("/visualizations/cast-times")
+        .then((response) => response.json())
+        .then((data) => {
+          const labels = data.map((d) => d.cast_time);
+          const counts = data.map((d) => d.count);
+          new Chart(document.getElementById("castTimeChart"), {
+            type: "doughnut",
+            data: {
+              labels,
+              datasets: [
+                {
+                  data: counts,
+                  backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+                },
+              ],
+            },
+          });
+        });
+    </script>
+  </body>
+</html>
